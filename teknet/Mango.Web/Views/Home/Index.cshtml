@@ -1,0 +1,86 @@
+﻿@model IEnumerable<ProductDto>
+
+<style>
+    .products-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .product-entry {
+        display: block;
+        height: 100% !important;
+        flex: 0 1 calc(33.333% - 1em); /* Three items per row with space between */
+        margin-bottom: 1em;
+        box-sizing: border-box; /* Ensure padding and border are included in the width */
+        color: #000; /* Set the default text color to black */
+    }
+
+        .product-entry .prod-img {
+            display: block;
+            height: 200px; /* Set a fixed height for the image container */
+            width: 100%; /* Ensure it takes up the full width of the parent */
+            overflow: hidden; /* Hide overflow if the image is larger */
+        }
+
+            .product-entry .prod-img img {
+                height: 100%; /* Image takes up the full height of the container */
+                width: 100%; /* Image takes up the full width of the container */
+                object-fit: cover; /* Ensure the image maintains its aspect ratio and covers the area */
+            }
+
+        .product-entry .desc {
+            padding: 1.5em;
+        }
+
+            .product-entry .desc h2 {
+                text-transform: uppercase;
+                font-size: 18px;
+                color: #000; /* Ensure header text is black */
+            }
+
+                .product-entry .desc h2 a {
+                    color: #000; /* Ensure links are black */
+                }
+
+            .product-entry .desc span.price {
+                display: block;
+                font-family: "Rokkitt", Georgia, serif;
+                font-size: 18px;
+                color: #000; /* Ensure price text is black */
+                font-weight: 400;
+            }
+
+            .product-entry .desc p {
+                color: #000; /* Ensure paragraph text is black */
+            }
+
+    .btn-custom {
+        background-color: #2C41A2; /* Custom background color for the button */
+        color: #fff; /* Set text color to white for better contrast */
+    }
+</style>
+
+<form>
+    <div class="container products-container">
+        @foreach (var product in Model)
+        {
+            <div class="product-entry border">
+                <a href="#" class="prod-img">
+                    <img src="@product.ImageUrl" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                </a>
+                <div class="desc">
+                    <h2><a href="#">@product.Name</a></h2>
+                    <span class="price">@string.Format("Rp {0:N}", product.Price)</span>
+                    <p>@Html.Raw(product.Description)</p>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a asp-action="ProductDetails" asp-route-productId="@product.ProductId"
+                           class="btn form-control btn-custom">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</form>
